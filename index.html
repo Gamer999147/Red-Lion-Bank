@@ -1,0 +1,1737 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Red Lion Shell Bank - Premium Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary: #E53935;
+            --primary-dark: #B71C1C;
+            --primary-light: #FFEBEE;
+            --accent: #FFC107;
+            --dark-surface: #1E2229;
+            --bg-gradient: linear-gradient(135deg, #0F1115 0%, #1A1F26 100%);
+            --card-gradient: linear-gradient(135deg, #FF3D00 0%, #D32F2F 100%);
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --text-white: #FFFFFF;
+            --text-gray: #94A3B8;
+            --success: #10B981;
+            --success-light: rgba(16, 185, 129, 0.1);
+            --glow-red: 0 0 30px rgba(229,57,53,.45);
+            --glow-gold: 0 0 30px rgba(255,193,7,.35);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        body {
+            background: var(--bg-gradient);
+            color: var(--text-white);
+            min-height: 100vh;
+            padding: 13px 15px;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background:
+                radial-gradient(circle at 18% 20%, rgba(229, 57, 53, 0.18), transparent 28%),
+                radial-gradient(circle at 82% 12%, rgba(255, 193, 7, 0.13), transparent 26%),
+                linear-gradient(120deg, rgba(255,255,255,0.035) 0 1px, transparent 1px 100%);
+            background-size: auto, auto, 72px 72px;
+            pointer-events: none;
+            z-index: -2;
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background: linear-gradient(90deg, rgba(255,255,255,0.025), transparent 22%, transparent 78%, rgba(255,255,255,0.025));
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        /* Full website shell */
+        .container {
+            width: min(100%, 1440px);
+            height: calc(100vh - 32px);
+            min-height: 620px;
+            overflow: hidden;
+            margin: 0 auto;
+            background: rgba(30, 34, 42, 0.72);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 30px;
+            box-shadow: 0 30px 90px rgba(0, 0, 0, 0.42), inset 0 1px 0 rgba(255,255,255,0.1);
+            padding: 16px;
+            position: relative;
+            display: grid;
+            grid-template-columns: 250px minmax(0, 1fr);
+            grid-template-rows: auto 1fr;
+            gap: 18px;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            animation: containerFloat 8s ease-in-out infinite;
+        }
+        .account-card:hover {
+            transform: translateY(-6px) scale(1.01);
+            transition: all .35s ease;
+        }
+        .action-btn:hover {
+            box-shadow: var(--glow-red);
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            inset: 18px;
+            border: 1px solid rgba(255,255,255,0.04);
+            border-radius: 24px;
+            pointer-events: none;
+        }
+
+        .hidden { display: none !important; }
+        .text-center { text-align: center; }
+        
+        /* Premium Vector Brand Identity Header */
+        .bank-brand {
+            align-self: start;
+            background: linear-gradient(180deg, rgba(255,255,255,0.055), rgba(255,255,255,0.018));
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            min-height: 100%;
+            padding: 16px;
+            text-align: left;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .bank-brand::after {
+            content: 'RLSB';
+            position: absolute;
+            bottom: 16px;
+            left: 22px;
+            font-size: 3rem;
+            font-weight: 800;
+            color: rgba(255,255,255,0.035);
+            letter-spacing: -4px;
+        }
+
+        .logo-wrapper {
+            width: 66px;
+            height: 66px;
+            background: rgba(229, 57, 53, 0.1);
+            border: 2px solid rgba(229, 57, 53, 0.2);
+            border-radius: 24px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 0 16px 0;
+            box-shadow: 0 12px 24px rgba(229, 57, 53, 0.15);
+        }
+
+        .bank-logo-svg {
+            width: 38px;
+            height: 38px;
+            fill: var(--primary);
+            filter: drop-shadow(0 2px 8px rgba(229,57,53,0.3));
+        }
+
+        .bank-name {
+            font-size: 1.55rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            background: linear-gradient(120deg, #FFF 40%, #FFD700 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .bank-sub {
+            font-size: 0.8rem;
+            color: var(--text-gray);
+            margin-top: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-weight: 600;
+            line-height: 1.6;
+        }
+
+        #alertBox {
+            grid-column: 2;
+            align-self: start;
+            position: sticky;
+            top: 24px;
+            z-index: 12;
+        }
+
+        #screenLanding,
+        #screenSignup,
+        #screenLogin,
+        #screenDashboard,
+        #screenSettings {
+            grid-column: 2;
+            grid-row: 2;
+            min-width: 0;
+        }
+
+        #screenLanding,
+        #screenSignup,
+        #screenLogin,
+        #screenSettings {
+            align-self: start;
+            max-width: 980px;
+        }
+
+        #screenLanding {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 14px;
+            align-content: center;
+            position: relative;
+        }
+
+        #screenLanding::before {
+            content: 'Command your vault from a premium banking floor.';
+            grid-column: 1 / -1;
+            max-width: 780px;
+            margin-bottom: 0;
+            color: var(--text-white);
+            font-size: clamp(2rem, 3.8vw, 4.6rem);
+            font-weight: 800;
+            line-height: 0.98;
+            letter-spacing: -2.5px;
+        }
+
+        #screenLanding::after {
+            content: '';
+            position: absolute;
+            right: 2%;
+            top: 4%;
+            width: 260px;
+            height: 260px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255,193,7,0.16), transparent 62%);
+            filter: blur(4px);
+            pointer-events: none;
+        }
+
+        #screenSignup,
+        #screenLogin,
+        #screenSettings,
+        #transactionPanel,
+        .history-section {
+            background: linear-gradient(145deg, rgba(255,255,255,0.07), rgba(0,0,0,0.2));
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 26px;
+            padding: 20px;
+            box-shadow: 0 22px 60px rgba(0,0,0,0.26), inset 0 1px 0 rgba(255,255,255,0.08);
+        }
+
+        #screenSignup,
+        #screenLogin,
+        #screenSettings {
+            max-height: 100%;
+        }
+
+        #screenSignup h3,
+        #screenLogin h3,
+        #screenSettings h3 {
+            font-size: clamp(1.25rem, 2vw, 1.8rem);
+            letter-spacing: -0.5px;
+            margin-bottom: 14px !important;
+        }
+
+        #screenLanding .btn {
+            min-height: 96px;
+            justify-content: flex-start;
+            padding: 20px;
+            border-radius: 24px;
+            font-size: 1.05rem;
+            background: linear-gradient(145deg, rgba(255,255,255,0.08), rgba(255,255,255,0.025));
+            border: 1px solid rgba(255,255,255,0.1);
+            box-shadow: 0 18px 45px rgba(0,0,0,0.24);
+        }
+
+        #screenLanding .btn i {
+            width: 46px;
+            height: 46px;
+            border-radius: 16px;
+            display: grid;
+            place-items: center;
+            background: rgba(229,57,53,0.18);
+            color: var(--accent);
+            font-size: 1.25rem;
+        }
+
+        #screenLanding .btn:hover {
+            border-color: rgba(255,193,7,0.32);
+            transform: translateY(-6px);
+        }
+
+        /* Beautiful Floating Form Group inputs */
+        .form-group {
+            margin-bottom: 14px;
+            position: relative;
+        }
+
+        label {
+            display: block;
+            font-size: 0.76rem;
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: var(--text-gray);
+            letter-spacing: 0.3px;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 11px 14px;
+            border: 1px solid var(--glass-border);
+            border-radius: 14px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            background: rgba(0, 0, 0, 0.2);
+            color: var(--text-white);
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--primary);
+            background: rgba(0, 0, 0, 0.35);
+            box-shadow: 0 0 0 4px rgba(229, 57, 53, 0.15);
+        }
+
+        /* High-fidelity modern buttons */
+        .btn {
+            width: 100%;
+            padding: 13px 15px;
+            border: none;
+            border-radius: 14px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 8px 20px rgba(229, 57, 53, 0.3);
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 12px 24px rgba(229, 57, 53, 0.4);
+        }
+
+        .btn-primary:active { transform: translateY(0); }
+
+        .btn-outline {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            color: var(--text-white);
+            margin-top: 14px;
+        }
+
+        .btn-outline:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 14px;
+        }
+
+        .card-logo-lockup {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+
+        .card-logo-icon {
+            width: 38px;
+            height: 38px;
+            padding: 8px;
+            border-radius: 14px;
+            background: rgba(255,255,255,0.16);
+            border: 1px solid rgba(255,255,255,0.22);
+            fill: #fff;
+            filter: drop-shadow(0 8px 16px rgba(0,0,0,0.24));
+        }
+
+        .compact-actions {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 10px;
+        }
+
+        /* Luxury Neo-Brutalist Credit Card UI */
+        .account-card {
+            background:
+                linear-gradient(135deg, rgba(255,255,255,0.18), transparent 24%),
+                radial-gradient(circle at 78% 18%, rgba(255,193,7,0.36), transparent 20%),
+                linear-gradient(135deg, #fd5b35 0%, #d8202f 44%, #7b1218 100%);
+            color: white;
+            padding: clamp(22px, 3vw, 34px);
+            border-radius: 30px;
+            margin-bottom: 0;
+            min-height: 300px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 28px 70px rgba(229, 57, 53, 0.34), inset 0 1px 1px rgba(255,255,255,0.34);
+            isolation: isolate;
+        }
+
+        .account-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                linear-gradient(115deg, transparent 0 42%, rgba(255,255,255,0.13) 43%, transparent 47%),
+                repeating-linear-gradient(90deg, rgba(255,255,255,0.035) 0 1px, transparent 1px 18px);
+            opacity: 0.85;
+            z-index: -1;
+        }
+
+        .account-card::after {
+            content: '';
+            position: absolute;
+            right: -70px;
+            bottom: -90px;
+            width: 310px;
+            height: 310px;
+            border-radius: 50%;
+            border: 46px solid rgba(255,255,255,0.08);
+            z-index: -1;
+        }
+
+        .acc-profile {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 14px;
+        }
+
+        .acc-name { font-weight: 800; font-size: 1.25rem; letter-spacing: -0.4px; }
+        .acc-number { font-size: 0.86rem; color: rgba(255,255,255,0.78); font-family: monospace; margin-top: 4px; letter-spacing: 1px; }
+
+        .card-brand-mark {
+            text-align: right;
+            font-size: 0.74rem;
+            font-weight: 800;
+            letter-spacing: 2.5px;
+            color: rgba(255,255,255,0.78);
+            text-transform: uppercase;
+        }
+        
+        .chip-icon {
+            width: 62px;
+            height: 46px;
+            background:
+                linear-gradient(90deg, transparent 32%, rgba(80,45,0,0.22) 32% 36%, transparent 36% 64%, rgba(80,45,0,0.22) 64% 68%, transparent 68%),
+                linear-gradient(0deg, transparent 44%, rgba(80,45,0,0.2) 44% 50%, transparent 50%),
+                linear-gradient(135deg, #ffe788 0%, #d69b25 52%, #8f6112 100%);
+            border-radius: 10px;
+            border: 1px solid rgba(255,255,255,0.35);
+            position: relative;
+            box-shadow: inset 0 1px 8px rgba(255,255,255,0.3), 0 10px 20px rgba(0,0,0,0.18);
+        }
+
+        .card-midline {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 18px;
+            margin: 14px 0;
+        }
+
+        .card-number-display {
+            font-family: monospace;
+            font-size: clamp(1.1rem, 2vw, 1.55rem);
+            letter-spacing: 3px;
+            color: rgba(255,255,255,0.9);
+            text-shadow: 0 2px 10px rgba(0,0,0,0.24);
+        }
+
+        .card-hologram {
+            width: 74px;
+            height: 48px;
+            border-radius: 50%;
+            background: conic-gradient(from 90deg, #fff3, #ffc10799, #60a5fa88, #fff4, #10b98188, #fff3);
+            filter: saturate(1.25);
+            opacity: 0.92;
+            flex: 0 0 auto;
+        }
+
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            gap: 20px;
+        }
+
+        .card-footer-label {
+            color: rgba(255,255,255,0.64);
+            font-size: 0.66rem;
+            text-transform: uppercase;
+            letter-spacing: 1.6px;
+            margin-bottom: 4px;
+            font-weight: 700;
+        }
+
+        .card-footer-value {
+            font-size: 1rem;
+            font-weight: 800;
+            letter-spacing: 0.8px;
+        }
+
+        .balance-label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1.2px; color: rgba(255,255,255,0.75); font-weight: 600; }
+        .balance-amount {
+            font-size: clamp(2rem, 4.4vw, 4.2rem);
+            font-weight: 800;
+            margin-top: 8px;
+            letter-spacing: -1px;
+            transition: transform 0.35s ease, text-shadow 0.35s ease;
+        }
+
+        .balance-amount.pulse-balance {
+            transform: scale(1.035);
+            text-shadow: 0 0 28px rgba(255,255,255,0.55);
+        }
+
+        /* Quick Rounded Navigation Icons Grid */
+        #screenDashboard {
+            display: grid;
+            grid-template-columns: minmax(420px, 1.18fr) minmax(340px, 0.82fr);
+            grid-template-rows: auto auto 1fr;
+            gap: 14px;
+            align-content: start;
+        }
+
+        #screenDashboard .account-card {
+            grid-row: 1 / 3;
+        }
+
+        .actions-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 10px;
+            margin-bottom: 0;
+        }
+
+        .action-btn {
+            display: flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--glass-border);
+            padding: 10px 12px;
+            border-radius: 14px;
+            cursor: pointer;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: var(--text-gray);
+            gap: 10px;
+            min-height: 62px;
+        }
+
+        .action-btn:hover {
+            border-color: var(--primary);
+            color: var(--text-white);
+            background: rgba(229, 57, 53, 0.05);
+            transform: translateY(-4px);
+        }
+
+        .action-btn .icon-box {
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.15rem;
+            background: rgba(255, 255, 255, 0.04);
+            transition: all 0.25s;
+        }
+
+        .action-btn:hover .icon-box {
+            background: var(--primary);
+            color: white !important;
+        }
+
+        /* Panel Contextual Form Interface */
+        #transactionPanel {
+            grid-column: 2;
+            grid-row: 2;
+            animation: slideDown 0.3s ease-out;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Transaction Feed List UI */
+        .history-section {
+            grid-column: 1 / -1;
+            grid-row: 3;
+            min-height: 0;
+        }
+
+        .stats-bar {
+            grid-column: 2;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+
+        .stat-card {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 14px;
+        }
+
+        .stat-card h5 {
+            color: var(--text-gray);
+            font-size: 0.75rem;
+            margin-bottom: 6px;
+        }
+
+        .stat-card span {
+            font-size: 1.2rem;
+            font-weight: 800;
+        }
+
+        .stat-card {
+            transition: all .3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--glow-gold);
+        }
+
+        .section-title {
+            font-size: 0.95rem;
+            font-weight: 700;
+            margin-bottom: 14px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: var(--text-white);
+        }
+
+        .transaction-list {
+            max-height: 280px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            padding-right: 4px;
+        }
+
+        /* Custom Scrollbar */
+        .transaction-list::-webkit-scrollbar { width: 4px; }
+        .transaction-list::-webkit-scrollbar-thumb { background: var(--glass-border); border-radius: 10px; }
+
+        .transaction-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--glass-border);
+            border-radius: 14px;
+            font-size: 0.88rem;
+            transition: all 0.2s;
+        }
+
+        .transaction-item:hover {
+            background: rgba(255, 255, 255, 0.04);
+            border-color: rgba(255, 255, 255, 0.12);
+        }
+
+        .tx-info h4 { font-weight: 600; font-size: 0.88rem; color: var(--text-white); }
+        .tx-info p { font-size: 0.75rem; color: var(--text-gray); margin-top: 4px; }
+        .tx-amount { font-weight: 700; font-size: 0.95rem; }
+        
+        .tx-deposit .tx-amount { color: var(--success); }
+        .tx-withdraw .tx-amount { color: var(--primary); }
+        .tx-transfer .tx-amount { color: #60A5FA; }
+
+        /* Dynamic Feedback Alert Toasts */
+        .alert {
+            padding: 11px 14px;
+            border-radius: 14px;
+            margin-bottom: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            animation: fadeIn 0.3s ease;
+        }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .alert-error { background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.25); color: #FCA5A5; }
+        .alert-success { background: var(--success-light); border: 1px solid rgba(16, 185, 129, 0.25); color: #A7F3D0; }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 20px;
+            color: var(--text-gray);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        .back-link:hover { color: var(--primary); }
+
+        .event-animation {
+            position: fixed;
+            inset: 0;
+            display: grid;
+            place-items: center;
+            background:
+                radial-gradient(circle at center, rgba(255, 193, 7, 0.18), transparent 22%),
+                radial-gradient(circle at center, rgba(229, 57, 53, 0.32), rgba(15, 17, 21, 0.92) 66%);
+            opacity: 0;
+            pointer-events: none;
+            z-index: 100;
+            transition: opacity 0.45s ease;
+            backdrop-filter: blur(8px);
+        }
+
+        .event-animation.active {
+            opacity: 1;
+            animation: eventFade 2.35s ease forwards;
+        }
+
+        .event-core {
+            width: min(760px, 92vw);
+            aspect-ratio: 1;
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            position: relative;
+            background: radial-gradient(circle, rgba(255,255,255,0.16), rgba(229,57,53,0.12) 42%, transparent 64%);
+        }
+
+        .event-core::before,
+        .event-core::after {
+            content: '';
+            position: absolute;
+            inset: 14%;
+            border-radius: 50%;
+            border: 1px solid rgba(255,255,255,0.18);
+            animation: eventRing 2.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .event-core::after {
+            inset: 2%;
+            border-color: rgba(255,193,7,0.18);
+            animation-delay: 0.08s;
+        }
+
+        .event-card {
+            width: min(440px, 78vw);
+            padding: 50px 42px;
+            border: 1px solid rgba(255,255,255,0.16);
+            border-radius: 24px;
+            background: rgba(30, 34, 42, 0.82);
+            box-shadow: 0 30px 80px rgba(0,0,0,0.38);
+            text-align: center;
+            animation: eventPop 2.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .event-card i {
+            font-size: 5rem;
+            color: var(--accent);
+            filter: drop-shadow(0 0 20px rgba(255,193,7,0.45));
+            margin-bottom: 12px;
+        }
+
+        .event-card h2 {
+            font-size: 2.05rem;
+            letter-spacing: -0.4px;
+            margin-bottom: 8px;
+        }
+
+        .event-card p {
+            color: var(--text-gray);
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        @keyframes eventFade {
+            0% { opacity: 0; }
+            12%, 76% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+
+        @keyframes eventRing {
+            0% { transform: scale(0.45); opacity: 0; }
+            24% { opacity: 1; }
+            100% { transform: scale(1.35); opacity: 0; }
+        }
+
+        @keyframes eventPop {
+            0% { transform: translateY(18px) scale(0.9); opacity: 0; }
+            22%, 72% { transform: translateY(0) scale(1); opacity: 1; }
+            100% { transform: translateY(-14px) scale(0.98); opacity: 0; }
+        }
+
+        @keyframes ledgerFlash {
+            0% { box-shadow: 0 0 0 rgba(255,193,7,0); }
+            35% { box-shadow: 0 0 0 8px rgba(255,193,7,0.08), 0 0 42px rgba(255,193,7,0.28); }
+            100% { box-shadow: 0 16px 32px rgba(229, 57, 53, 0.25), inset 0 1px 1px rgba(255,255,255,0.3); }
+        }
+
+        .account-card.ledger-flash {
+            animation: ledgerFlash 1s ease;
+        }
+
+
+
+
+        .settings-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 14px;
+            margin-bottom: 12px;
+        }
+
+        .settings-header h3 {
+            margin-bottom: 0 !important;
+        }
+
+        .settings-header .btn {
+            width: auto;
+            min-width: 150px;
+            padding: 10px 14px;
+            margin-top: 0;
+        }
+
+        .settings-grid {
+            display: grid;
+            grid-template-columns: 0.85fr 1.15fr;
+            gap: 14px;
+            align-items: start;
+        }
+
+        .settings-card {
+            background: rgba(255,255,255,0.035);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 16px;
+        }
+
+        .settings-card h4 {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            font-size: 0.95rem;
+            color: var(--accent);
+        }
+
+        .settings-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .settings-actions .btn {
+            padding: 12px 14px;
+            font-size: 0.86rem;
+        }
+
+        @keyframes containerFloat {
+            0%,100% { transform: translateY(0px); }
+            50% { transform: translateY(-4px); }
+        }
+
+        @media (max-width: 860px) {
+            .settings-grid { grid-template-columns: 1fr; }
+            .settings-actions { flex-direction: column; }
+        }
+
+        @media (max-width: 1080px) {
+            body { padding: 12px; }
+
+            .container {
+                height: auto;
+                min-height: calc(100vh - 24px);
+                overflow: visible;
+                grid-template-columns: 1fr;
+                gap: 14px;
+                padding: 24px;
+            }
+
+            .bank-brand,
+            #alertBox,
+            #screenLanding,
+            #screenSignup,
+            #screenLogin,
+            #screenDashboard,
+            #screenSettings {
+                grid-column: 1;
+                grid-row: auto;
+            }
+
+            .bank-brand {
+                min-height: auto;
+                display: grid;
+                grid-template-columns: auto 1fr;
+                column-gap: 18px;
+                align-items: center;
+            }
+
+            .logo-wrapper { margin: 0; }
+
+            #screenDashboard {
+                grid-template-columns: 1fr;
+            }
+
+            #screenDashboard .account-card {
+                grid-row: auto;
+            }
+
+            #transactionPanel,
+            .history-section {
+                grid-column: 1;
+                grid-row: auto;
+            }
+        }
+
+        @media (max-width: 680px) {
+            .container { padding: 18px; border-radius: 24px; }
+            #screenLanding { grid-template-columns: 1fr; }
+            .actions-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+            .form-row { grid-template-columns: 1fr; }
+            .account-card { min-height: 300px; }
+            .card-footer { align-items: flex-start; flex-direction: column; }
+            .bank-name { font-size: 1.4rem; }
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div id="alertBox" class="alert hidden"></div>
+
+        <div class="bank-brand">
+            <div class="logo-wrapper">
+                <svg class="bank-logo-svg" viewBox="0 0 24 24">
+                    <path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.9-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.9 1.52 2.34 1.08 2.91.83.1-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.94 0-1.1.39-1.99 1.03-2.69-.1-.25-.45-1.27.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.37.2 2.39.1 2.64.64.7 1.03 1.6 1.03 2.69 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2z"/>
+                    <path d="M12 6a2.5 2.5 0 0 1 2.5 2.5C14 10 12 13 12 13s-2-3-2-4.5A2.5 2.5 0 0 1 12 6z" fill="var(--accent)"/>
+                </svg>
+            </div>
+            <div class="bank-name">Red Lion Shell Bank</div>
+            <div class="bank-sub">Premium Digital Node</div>
+        </div>
+
+        <div id="screenLanding">
+            <button class="btn btn-primary" onclick="switchScreen('screenLogin')">
+                <i class="fa-solid fa-key"></i> Secure Account Login
+            </button>
+            <button class="btn btn-outline" onclick="switchScreen('screenSignup')">
+                <i class="fa-solid fa-user-plus"></i> Request Premium Account
+            </button>
+        </div>
+
+        <div id="screenSignup" class="hidden">
+            <h3 style="margin-bottom: 18px; font-weight:700;">Account Application</h3>
+            <form id="signupForm" onsubmit="handleSignup(event)">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Legal Full Name</label>
+                        <input type="text" id="signupName" required placeholder="e.g. Alexander Wright">
+                    </div>
+                    <div class="form-group">
+                        <label>Select Username Identifier</label>
+                        <input type="text" id="signupUser" required placeholder="e.g. alexwright">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Access Security Password</label>
+                        <input type="password" id="signupPass" required placeholder="Password">
+                    </div>
+                    <div class="form-group">
+                        <label>Initial Liquidity Capital Deposit ($)</label>
+                        <input type="number" id="signupDeposit" min="10" value="1000" required>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Initialize Vault Configuration</button>
+            </form>
+            <div class="text-center">
+                <a class="back-link" onclick="switchScreen('screenLanding')"><i class="fa-solid fa-arrow-left-long"></i> Return to Gateway</a>
+            </div>
+        </div>
+
+        <div id="screenLogin" class="hidden">
+            <h3 style="margin-bottom: 18px; font-weight:700;">Secure Node Identity</h3>
+            <form id="loginForm" onsubmit="handleLogin(event)">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Username Account ID</label>
+                        <input type="text" id="loginUser" required placeholder="Username">
+                    </div>
+                    <div class="form-group">
+                        <label>Secret Security Verification Pin</label>
+                        <input type="password" id="loginPass" required placeholder="Password">
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Decrypt Portal Authorization</button>
+            </form>
+            <div class="text-center">
+                <a class="back-link" onclick="switchScreen('screenLanding')"><i class="fa-solid fa-arrow-left-long"></i> Return to Gateway</a>
+            </div>
+        </div>
+
+        <div id="screenDashboard" class="hidden">
+            <div class="account-card" id="accountCard">
+                <div class="acc-profile">
+                    <div>
+                        <div class="acc-name" id="userDisplayName">User Profile</div>
+                        <div class="acc-number" id="userDisplayAccNo">ACC: #RLSB0000</div>
+                    </div>
+                    <div class="card-logo-lockup">
+                        <svg class="card-logo-icon" viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.9-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.9 1.52 2.34 1.08 2.91.83.1-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.94 0-1.1.39-1.99 1.03-2.69-.1-.25-.45-1.27.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.37.2 2.39.1 2.64.64.7 1.03 1.6 1.03 2.69 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2z"/>
+                            <path d="M12 6a2.5 2.5 0 0 1 2.5 2.5C14 10 12 13 12 13s-2-3-2-4.5A2.5 2.5 0 0 1 12 6z" fill="var(--accent)"/>
+                        </svg>
+                        <div class="card-brand-mark">Red Lion<br>Reserve</div>
+                    </div>
+                </div>
+                <div class="card-midline">
+                    <div class="chip-icon"></div>
+                    <div class="card-hologram"></div>
+                </div>
+                <div class="card-number-display" id="cardNumberDisplay">RLSB 0000 0000 0000</div>
+                <div class="card-footer">
+                    <div>
+                        <div class="card-footer-label">Card Holder</div>
+                        <div class="card-footer-value" id="cardHolderName">User Profile</div>
+                    </div>
+                    <div>
+                        <div class="card-footer-label">Balance</div>
+                        <div class="balance-amount" id="userDisplayBalance">$0.00</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="stats-bar">
+                <div class="stat-card">
+                    <h5>Total Transactions</h5>
+                    <span id="totalTransactions">0</span>
+                </div>
+                <div class="stat-card">
+                    <h5>Total Deposits</h5>
+                    <span id="totalDeposits">$0</span>
+                </div>
+                <div class="stat-card">
+                    <h5>Total Withdrawals</h5>
+                    <span id="totalWithdrawals">$0</span>
+                </div>
+            </div>
+
+            <div class="actions-grid">
+                <div class="action-btn" onclick="openTransactionModal('deposit')">
+                    <div class="icon-box" style="color: var(--success);"><i class="fa-solid fa-circle-arrow-down"></i></div>
+                    <span>Deposit</span>
+                </div>
+                <div class="action-btn" onclick="openTransactionModal('withdraw')">
+                    <div class="icon-box" style="color: var(--primary);"><i class="fa-solid fa-circle-arrow-up"></i></div>
+                    <span>Withdraw</span>
+                </div>
+                <div class="action-btn" onclick="openTransactionModal('transfer')">
+                    <div class="icon-box" style="color: #60A5FA;"><i class="fa-solid fa-money-bill-transfer"></i></div>
+                    <span>Transfer</span>
+                </div>
+                <div class="action-btn" onclick="revealBalanceAnimation()">
+                    <div class="icon-box" style="color: var(--accent);"><i class="fa-solid fa-chart-line"></i></div>
+                    <span>Balance</span>
+                </div>
+                <div class="action-btn" onclick="openSettings()">
+                    <div class="icon-box" style="color: #CBD5E1;"><i class="fa-solid fa-gear"></i></div>
+                    <span>Settings</span>
+                </div>
+                <div class="action-btn" onclick="handleLogout()">
+                    <div class="icon-box" style="color: var(--text-gray);"><i class="fa-solid fa-power-off"></i></div>
+                    <span>Logout</span>
+                </div>
+                <div class="action-btn" onclick="openSavingsGoal()">
+                    <div class="icon-box" style="color:#FFC107;"><i class="fa-solid fa-bullseye"></i></div>
+                    <span>Goals</span>
+                </div>
+            </div>
+
+            <div id="transactionPanel" class="hidden">
+                <h4 id="panelTitle" style="margin-bottom: 14px; font-size: 0.9rem; font-weight:700; text-transform:uppercase; color: var(--accent);">Operational Protocol</h4>
+                <form id="actionForm" onsubmit="executeTransaction(event)">
+                    <input type="hidden" id="actionType">
+                    <div class="form-group" id="targetAccGroup">
+                        <label id="panelTargetLabel">Destination Routing Node (Acc No.)</label>
+                        <input type="text" id="actionTarget" placeholder="e.g. RLSB7890">
+                    </div>
+                    <div class="form-group">
+                        <label>Asset Transfer Amount ($)</label>
+                        <input type="number" id="actionAmount" min="1" step="any" placeholder="0.00" required>
+                    </div>
+                    <div style="display: flex; gap: 10px;">
+                        <button type="submit" class="btn btn-primary" style="padding: 10px; font-size:0.85rem;">Authorize</button>
+                        <button type="button" class="btn btn-outline" style="margin: 0; padding: 10px; font-size:0.85rem;" onclick="closeTransactionPanel()">Abort</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="history-section">
+<div id="goalPanel" class="hidden">
+    <div class="settings-card">
+        <h4><i class="fa-solid fa-bullseye"></i> Goals</h4>
+
+        <div id="goalsList" style="display:flex;flex-direction:column;gap:12px;margin-bottom:15px;"></div>
+
+        <hr style="margin:15px 0;border-color:rgba(255,255,255,.1);">
+
+        <h4><i class="fa-solid fa-plus"></i> Add Goal</h4>
+
+        <div class="form-group">
+            <label>Goal Name</label>
+            <input id="goalName" placeholder="Gaming PC">
+        </div>
+
+        <div class="form-group">
+            <label>Target Amount</label>
+            <input id="goalTarget" type="number" placeholder="1000">
+        </div>
+
+        <button class="btn btn-primary" onclick="addGoal()">Add Goal</button>
+    </div>
+</div>
+                <div class="section-title">
+                    <span>Audit Trail Ledger Statements</span>
+                    <button class="btn btn-outline" style="width:auto;padding:8px 12px;margin:0;" onclick="exportHistory()">Export</button>
+                    <i class="fa-solid fa-receipt" style="color: var(--text-gray); font-size:0.85rem;"></i>
+                </div>
+                <div class="transaction-list" id="historyList">
+                    </div>
+            </div>
+        </div>
+
+        <div id="screenSettings" class="hidden">
+            <div class="settings-header">
+                <h3>Account Settings</h3>
+                <button class="btn btn-outline" type="button" onclick="switchScreen('screenDashboard')"><i class="fa-solid fa-arrow-left-long"></i> Dashboard</button>
+            </div>
+            <div class="settings-grid">
+                <div class="settings-card">
+                    <h4><i class="fa-solid fa-user-pen"></i> Change Username</h4>
+                    <form id="usernameForm" onsubmit="handleUsernameChange(event)">
+                        <div class="form-group">
+                            <label>Current Username</label>
+                            <input type="text" id="currentUsernameDisplay" disabled>
+                        </div>
+                        <div class="form-group">
+                            <label>New Username</label>
+                            <input type="text" id="settingsNewUsername" required placeholder="Choose an available username">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Check Availability & Update</button>
+                    </form>
+                </div>
+                <div class="settings-card">
+                    <h4><i class="fa-solid fa-lock"></i> Change Password</h4>
+                    <form id="passwordForm" onsubmit="handlePasswordChange(event)">
+                        <div class="form-group">
+                            <label>Old Password</label>
+                            <input type="password" id="settingsOldPassword" required placeholder="Current password">
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>New Password</label>
+                                <input type="password" id="settingsNewPassword" required placeholder="New password">
+                            </div>
+                            <div class="form-group">
+                                <label>Confirm New Password</label>
+                                <input type="password" id="settingsConfirmPassword" required placeholder="Repeat new password">
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Update Password</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+    <div id="eventAnimation" class="event-animation hidden" aria-hidden="true">
+        <div class="event-core">
+            <div class="event-card">
+                <i id="eventIcon" class="fa-solid fa-shield-halved"></i>
+                <h2 id="eventTitle">Authorized</h2>
+                <p id="eventText">Red Lion Shell Bank processed the request.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Local Browser Instance Database System Mock Storage Data Layer 
+        let users = JSON.parse(localStorage.getItem('rlsb_users_v2')) || {
+            'demo': {
+                name: 'Jane Smith',
+                username: 'demo',
+                password: 'password',
+                accNo: 'RLSB7890',
+                balance: 14250.00,
+                history: [
+                    { type: 'deposit', amount: 14250, details: 'Verified Core Treasury Capital Asset Opening', date: '2026-06-01 09:12' }
+                ]
+            }
+        };
+
+        let currentUser = null;
+
+        let failedAttempts = {};
+
+        let savingsGoals = JSON.parse(localStorage.getItem('rlsb_goals')) || [];
+
+        function openSavingsGoal() {
+            document.getElementById('goalPanel').classList.toggle('hidden');
+            renderGoals();
+        }
+
+        function addGoal() {
+            const name = document.getElementById('goalName').value.trim();
+            const target = parseFloat(document.getElementById('goalTarget').value);
+
+            if (!name || !target || target <= 0) {
+                showAlert('Enter a valid goal name and target amount.');
+                return;
+            }
+
+            savingsGoals.push({
+                id: Date.now(),
+                name,
+                target
+            });
+
+            localStorage.setItem('rlsb_goals', JSON.stringify(savingsGoals));
+
+            document.getElementById('goalName').value = '';
+            document.getElementById('goalTarget').value = '';
+
+            renderGoals();
+            showAlert('Goal added successfully.', true);
+        }
+
+        function deleteGoal(id) {
+            savingsGoals = savingsGoals.filter(goal => goal.id !== id);
+            localStorage.setItem('rlsb_goals', JSON.stringify(savingsGoals));
+            renderGoals();
+        }
+
+        function renderGoals() {
+            const container = document.getElementById('goalsList');
+            if (!container || !currentUser) return;
+
+            if (savingsGoals.length === 0) {
+                container.innerHTML = '<div style="color:var(--text-gray)">No goals yet.</div>';
+                return;
+            }
+
+            container.innerHTML = savingsGoals.map(goal => {
+                const percent = Math.min((currentUser.balance / goal.target) * 100, 100);
+
+                return `
+                    <div style="padding:12px;border:1px solid rgba(255,255,255,.08);border-radius:12px;">
+                        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+                            <strong>${goal.name}</strong>
+                            <button onclick="deleteGoal(${goal.id})" style="background:none;border:none;color:#ff6b6b;cursor:pointer;">Delete</button>
+                        </div>
+
+                        <div>$${currentUser.balance.toFixed(0)} / $${goal.target}</div>
+
+                        <progress value="${percent}" max="100" style="width:100%;height:14px;margin-top:8px;"></progress>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Routing Engine Screens Controls Transitions
+        function switchScreen(screenId) {
+            document.getElementById('screenLanding').classList.add('hidden');
+            document.getElementById('screenSignup').classList.add('hidden');
+            document.getElementById('screenLogin').classList.add('hidden');
+            document.getElementById('screenDashboard').classList.add('hidden');
+            document.getElementById('screenSettings').classList.add('hidden');
+
+            document.getElementById(screenId).classList.remove('hidden');
+            closeTransactionPanel();
+            hideAlert();
+        }
+
+        // Notification Alerts Module
+        function showAlert(msg, isSuccess = false) {
+            const alertBox = document.getElementById('alertBox');
+            alertBox.className = `alert ${isSuccess ? 'alert-success' : 'alert-error'}`;
+            alertBox.innerHTML = `<i class="fa-solid ${isSuccess ? 'fa-circle-check' : 'fa-circle-exclamation'}"></i> <span>${msg}</span>`;
+            alertBox.classList.remove('hidden');
+            // Auto scroll container header upward to highlight toasts notifications context
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function hideAlert() {
+            document.getElementById('alertBox').classList.add('hidden');
+        }
+
+        // SignUp System Validation Handling
+        function handleSignup(e) {
+            e.preventDefault();
+            const name = document.getElementById('signupName').value.trim();
+            const user = document.getElementById('signupUser').value.trim().toLowerCase();
+            const pass = document.getElementById('signupPass').value;
+            const deposit = parseFloat(document.getElementById('signupDeposit').value);
+
+            if (pass.length < 6) {
+                showAlert('Password must contain at least 6 characters.');
+                return;
+            }
+
+            if (users[user]) {
+                showAlert('Assigned variant alphanumeric ID registration matches active identity.');
+                return;
+            }
+
+            const accNo = 'RLSB' + Math.floor(1000 + Math.random() * 9000);
+            
+            users[user] = {
+                name: name,
+                username: user,
+                password: pass,
+                accNo: accNo,
+                balance: deposit,
+                history: [{ type: 'deposit', amount: deposit, details: 'Authorized Initial Account Setup Allocation', date: getTimestamp() }]
+            };
+
+            saveDatabase();
+            document.getElementById('signupForm').reset();
+            playEventAnimation('signup', 'Account Signed In', 'Your premium vault profile is ready.');
+            switchScreen('screenLogin');
+            showAlert('Vault access generated! Access node terminal below.', true);
+        }
+
+        // Core Login Framework Processing Identity Signatures
+        function handleLogin(e) {
+            e.preventDefault();
+            const user = document.getElementById('loginUser').value.trim().toLowerCase();
+            const pass = document.getElementById('loginPass').value;
+
+            if (users[user] && users[user].lockedUntil && Date.now() < users[user].lockedUntil) {
+                showAlert('Account temporarily locked. Please try again later.');
+                return;
+            }
+
+            if (users[user] && users[user].password === pass) {
+                currentUser = users[user];
+                currentUser.username = currentUser.username || user;
+                document.getElementById('loginForm').reset();
+                updateDashboard();
+                switchScreen('screenDashboard');
+                playEventAnimation('login', 'Login Authorized', `Welcome back, ${currentUser.name}.`);
+                animateBalance();
+                showAlert(`Welcome to Premium Vault System, ${currentUser.name}!`, true);
+            } else {
+                failedAttempts[user] = (failedAttempts[user] || 0) + 1;
+
+                if (failedAttempts[user] >= 5 && users[user]) {
+                    users[user].lockedUntil = Date.now() + (5 * 60 * 1000);
+                    saveDatabase();
+                }
+                showAlert('Signature verification mismatch. Secure node input validation rejected.');
+            }
+        }
+
+        // Live Dashboard Dynamic Content Framework Renderer Engine
+        function updateDashboard() {
+            document.getElementById('userDisplayName').innerText = currentUser.name;
+            document.getElementById('userDisplayAccNo').innerText = `ACC: #${currentUser.accNo}`;
+            document.getElementById('userDisplayBalance').innerText = `$${currentUser.balance.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+            document.getElementById('cardHolderName').innerText = currentUser.name;
+            document.getElementById('cardNumberDisplay').innerText = formatCardNumber(currentUser.accNo);
+            
+            renderHistory();
+            updateStatistics();
+            renderGoals();
+        }
+
+        function updateStatistics() {
+            const deposits = currentUser.history
+                .filter(tx => tx.type === 'deposit')
+                .reduce((sum, tx) => sum + tx.amount, 0);
+
+            const withdrawals = currentUser.history
+                .filter(tx => tx.type === 'withdraw' || tx.type === 'transfer')
+                .reduce((sum, tx) => sum + tx.amount, 0);
+
+            document.getElementById('totalTransactions').innerText = currentUser.history.length;
+            document.getElementById('totalDeposits').innerText = `$${deposits.toLocaleString()}`;
+            document.getElementById('totalWithdrawals').innerText = `$${withdrawals.toLocaleString()}`;
+        }
+
+        function renderHistory() {
+            const list = document.getElementById('historyList');
+            list.innerHTML = '';
+
+            if (currentUser.history.length === 0) {
+                list.innerHTML = '<p style="text-align:center; color:var(--text-gray); font-size:0.8rem; padding:16px;">Zero structured operational ledgers found.</p>';
+                return;
+            }
+
+            [...currentUser.history].reverse().forEach(tx => {
+                const item = document.createElement('div');
+                item.className = `transaction-item tx-${tx.type}`;
+                
+                let icon = 'fa-circle-arrow-down';
+                let prefix = '+';
+                if(tx.type === 'withdraw') { icon = 'fa-circle-arrow-up'; prefix = '-'; }
+                if(tx.type === 'transfer') { icon = 'fa-right-left'; prefix = '-'; }
+
+                item.innerHTML = `
+                    <div style="display:flex; align-items:center; gap:12px;">
+                        <i class="fa-solid ${icon}" style="opacity:0.5; font-size:1.1rem;"></i>
+                        <div class="tx-info">
+                            <h4>${tx.details}</h4><small style="color:#FFC107;">Verified</small>
+                            <p>${tx.date}</p>
+                        </div>
+                    </div>
+                    <div class="tx-amount">${prefix}$${tx.amount.toLocaleString('en-US', {minimumFractionDigits: 2})}</div>
+                `;
+                list.appendChild(item);
+            });
+        }
+
+        // Functional Contextual Forms System Operational Interlocks
+        function openTransactionModal(type) {
+            const panel = document.getElementById('transactionPanel');
+            const title = document.getElementById('panelTitle');
+            const targetGroup = document.getElementById('targetAccGroup');
+            
+            document.getElementById('actionForm').reset();
+            document.getElementById('actionType').value = type;
+            panel.classList.remove('hidden');
+
+            if (type === 'deposit') {
+                title.innerText = "Internal Asset Liquidity Credit";
+                targetGroup.classList.add('hidden');
+                document.getElementById('actionTarget').removeAttribute('required');
+            } else if (type === 'withdraw') {
+                title.innerText = "Vault Liquidation External Outbound";
+                targetGroup.classList.add('hidden');
+                document.getElementById('actionTarget').removeAttribute('required');
+            } else if (type === 'transfer') {
+                title.innerText = "Interbank Node Wire Remittance Routing";
+                targetGroup.classList.remove('hidden');
+                document.getElementById('actionTarget').setAttribute('required', 'true');
+            }
+        }
+
+        function closeTransactionPanel() {
+            document.getElementById('transactionPanel').classList.add('hidden');
+        }
+
+        // Central Ledger System Engine Execution Subroutines (Double Entry Framework Verification)
+        function executeTransaction(e) {
+            e.preventDefault();
+            const type = document.getElementById('actionType').value;
+            const amount = parseFloat(document.getElementById('actionAmount').value);
+            const targetAcc = document.getElementById('actionTarget').value.trim().toUpperCase();
+
+            if (isNaN(amount) || amount <= 0) {
+                showAlert('Transaction metrics values entered cannot be processed.');
+                return;
+            }
+
+            if (type === 'deposit') {
+                currentUser.balance += amount;
+                currentUser.history.push({
+                    type: 'deposit',
+                    amount: amount,
+                    details: 'Direct Local Cash Desk Inbound',
+                    date: getTimestamp()
+                });
+                showAlert(`Successfully credited $${amount.toFixed(2)} to ledger.`, true);
+
+            } else if (type === 'withdraw') {
+                if (amount > currentUser.balance) {
+                    showAlert('Asset ledger thresholds mismatch. Request exceeds structural capability.');
+                    return;
+                }
+                currentUser.balance -= amount;
+                currentUser.history.push({
+                    type: 'withdraw',
+                    amount: amount,
+                    details: 'Secure Terminal Liquidation Outbound',
+                    date: getTimestamp()
+                });
+                playEventAnimation('withdraw', 'Withdrawal Approved', `$${amount.toFixed(2)} released from your vault.`);
+                showAlert(`Successfully liquidated $${amount.toFixed(2)} out of active vault pools.`, true);
+
+            } else if (type === 'transfer') {
+                if (amount > currentUser.balance) {
+                    showAlert('Insufficient balances inside targeted cross-pool structure allocation.');
+                    return;
+                }
+                if (targetAcc === currentUser.accNo) {
+                    showAlert('Self-referencing loop wire commands are natively disabled.');
+                    return;
+                }
+
+                let recipientKey = null;
+                for (let u in users) {
+                    if (users[u].accNo === targetAcc) {
+                        recipientKey = u;
+                        break;
+                    }
+                }
+
+                if (!recipientKey) {
+                    showAlert(`Routing path confirmation error. Node identifier ${targetAcc} not tracked.`);
+                    return;
+                }
+
+                // Complete Double Entry Asset Ledger Update Cycles
+                currentUser.balance -= amount;
+                currentUser.history.push({
+                    type: 'transfer',
+                    amount: amount,
+                    details: `Wire Remittance to: ${users[recipientKey].name} (#${targetAcc})`,
+                    date: getTimestamp()
+                });
+
+                users[recipientKey].balance += amount;
+                users[recipientKey].history.push({
+                    type: 'deposit',
+                    amount: amount,
+                    details: `Wire Settlement from: ${currentUser.name} (#${currentUser.accNo})`,
+                    date: getTimestamp()
+                });
+
+                playEventAnimation('transfer', 'Transfer Complete', `$${amount.toFixed(2)} routed to ${targetAcc}.`);
+                showAlert(`Remittance sequence for $${amount.toFixed(2)} processed to ${targetAcc} successfully.`, true);
+            }
+
+            saveDatabase();
+            updateDashboard();
+            animateBalance();
+            closeTransactionPanel();
+        }
+
+
+
+        function openSettings() {
+            if (!currentUser) return;
+            document.getElementById('currentUsernameDisplay').value = currentUser.username;
+            document.getElementById('usernameForm').reset();
+            document.getElementById('currentUsernameDisplay').value = currentUser.username;
+            document.getElementById('passwordForm').reset();
+            switchScreen('screenSettings');
+        }
+
+        function handleUsernameChange(e) {
+            e.preventDefault();
+            if (!currentUser) return;
+            const newUsername = document.getElementById('settingsNewUsername').value.trim().toLowerCase();
+            const oldUsername = currentUser.username;
+
+            if (!/^[a-z0-9_]{3,18}$/.test(newUsername)) {
+                showAlert('Username must be 3-18 characters using letters, numbers, or underscores.');
+                return;
+            }
+            if (newUsername === oldUsername) {
+                showAlert('That username is already assigned to this vault.');
+                return;
+            }
+            if (users[newUsername]) {
+                showAlert('That username is already taken. Try another identifier.');
+                return;
+            }
+
+            users[newUsername] = currentUser;
+            delete users[oldUsername];
+            currentUser.username = newUsername;
+            saveDatabase();
+            document.getElementById('currentUsernameDisplay').value = newUsername;
+            document.getElementById('usernameForm').reset();
+            document.getElementById('currentUsernameDisplay').value = newUsername;
+            playEventAnimation('settings', 'Username Updated', `Your new login ID is ${newUsername}.`);
+            showAlert('Username changed successfully.', true);
+        }
+
+        function handlePasswordChange(e) {
+            e.preventDefault();
+            if (!currentUser) return;
+            const oldPassword = document.getElementById('settingsOldPassword').value;
+            const newPassword = document.getElementById('settingsNewPassword').value;
+            const confirmPassword = document.getElementById('settingsConfirmPassword').value;
+
+            if (oldPassword !== currentUser.password) {
+                showAlert('Old password does not match current vault credentials.');
+                return;
+            }
+            if (newPassword.length < 6) {
+                showAlert('New password must be at least 6 characters.');
+                return;
+            }
+            if (newPassword !== confirmPassword) {
+                showAlert('New password confirmation does not match.');
+                return;
+            }
+
+            currentUser.password = newPassword;
+            saveDatabase();
+            document.getElementById('passwordForm').reset();
+            playEventAnimation('settings', 'Password Updated', 'Your access credential has been rotated.');
+            showAlert('Password changed successfully.', true);
+        }
+
+        function formatCardNumber(accNo) {
+            const digits = accNo.replace(/\D/g, '').padEnd(12, '0').slice(0, 12);
+            return `RLSB ${digits.slice(0, 4)} ${digits.slice(4, 8)} ${digits.slice(8, 12)}`;
+        }
+
+        function handleLogout() {
+            playEventAnimation('logout', 'Logged Out', 'Secure session tunnel closed.');
+            currentUser = null;
+            switchScreen('screenLanding');
+            showAlert('Secure node tunnel authorization closed successfully.', true);
+        }
+
+        function revealBalanceAnimation() {
+            if (!currentUser) return;
+            playEventAnimation('balance', 'Balance Revealed', `Available capital: $${currentUser.balance.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`);
+            animateBalance();
+        }
+
+        function animateBalance() {
+            const balance = document.getElementById('userDisplayBalance');
+            const card = document.getElementById('accountCard');
+            if (!balance || !card) return;
+            balance.classList.remove('pulse-balance');
+            card.classList.remove('ledger-flash');
+            void balance.offsetWidth;
+            balance.classList.add('pulse-balance');
+            card.classList.add('ledger-flash');
+            setTimeout(() => {
+                balance.classList.remove('pulse-balance');
+                card.classList.remove('ledger-flash');
+            }, 1000);
+        }
+
+        function playEventAnimation(type, title, text) {
+            const animation = document.getElementById('eventAnimation');
+            const icon = document.getElementById('eventIcon');
+            const titleEl = document.getElementById('eventTitle');
+            const textEl = document.getElementById('eventText');
+            const icons = {
+                signup: 'fa-user-check',
+                login: 'fa-fingerprint',
+                logout: 'fa-door-open',
+                withdraw: 'fa-vault',
+                transfer: 'fa-money-bill-transfer',
+                balance: 'fa-chart-line',
+                settings: 'fa-gear'
+            };
+
+            icon.className = `fa-solid ${icons[type] || 'fa-shield-halved'}`;
+            titleEl.innerText = title;
+            textEl.innerText = text;
+            animation.classList.remove('hidden', 'active');
+            void animation.offsetWidth;
+            animation.classList.add('active');
+            setTimeout(() => {
+                animation.classList.remove('active');
+                animation.classList.add('hidden');
+            }, 2400);
+        }
+
+        // Storage Data Persistency & Timestamp Processing Helpers
+        function saveDatabase() {
+            localStorage.setItem('rlsb_users_v2', JSON.stringify(users));
+        }
+
+        function getTimestamp() {
+            const now = new Date();
+            return now.toISOString().replace('T', ' ').substring(0, 16);
+        }
+
+        function exportHistory() {
+            if (!currentUser) return;
+
+            const content = currentUser.history
+                .map(tx => `${tx.date} | ${tx.type.toUpperCase()} | $${tx.amount} | ${tx.details}`)
+                .join('\n');
+
+            const blob = new Blob([content], { type: 'text/plain' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = `${currentUser.username}_history.txt`;
+            link.click();
+        }
+    function openRedLionAI() {
+        if (!currentUser) {
+            showAlert('Login to use Red Lion AI.');
+            return;
+        }
+
+        const deposits = currentUser.history.filter(tx => tx.type === 'deposit').length;
+        const withdrawals = currentUser.history.filter(tx => tx.type === 'withdraw').length;
+
+        let advice = `Balance: $${currentUser.balance.toFixed(2)}. `;
+
+        if (currentUser.balance < 500) {
+            advice += 'Consider increasing savings.';
+        } else if (currentUser.balance > 5000) {
+            advice += 'Strong balance position.';
+        }
+
+        advice += ` Deposits: ${deposits}. Withdrawals: ${withdrawals}. Active goals: ${savingsGoals.length}.`;
+
+        showAlert(advice, true);
+    }
+    </script>
+<button id="assistantFab" onclick="openRedLionAI()" style="position:fixed;bottom:24px;right:24px;width:64px;height:64px;border:none;border-radius:50%;background:#E53935;color:white;font-size:24px;cursor:pointer;box-shadow:0 0 30px rgba(229,57,53,.5);z-index:999;">🤖</button>
+</body>
+</html>
